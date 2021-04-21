@@ -1,0 +1,68 @@
+clc;
+clear all;
+%'05_08_20_tension_silk_comp_1_Bar.txt'
+filename = input('file name:');
+   if ~exist(filename)
+        warningMessage = sprintf('WARNING: file does not exist:\n%s', filename);
+        uiwait(warndlg(warningMessage));
+    end
+% Manual input:
+%  st=input('Specimen Thickness (m):');
+%  sw=input('Specimen Width (m):');
+%  sd=input('Specimen Diameter (m):');
+%  sa=input('Specimen Area (m^2): ');
+%  sl=input('Specimen Length (m): ');
+file = fopen(filename,'rt');%open file and read-only.
+ECATENC = [];
+LCVE = [];
+sample = 1;
+strt=false;
+oneline = fgets(file);
+while ischar(oneline)
+  if contains(oneline,'Area');
+    Areastr = extractAfter(oneline,":");
+    Area = str2double(Areastr);
+    clear Areastr;
+  end
+    if contains(oneline,'Length');
+    Lengthstr = extractAfter(oneline,":");
+    Length = str2double(Lengthstr);
+    clear Lengthstr;
+    end
+  if contains(oneline,'ECATENC') %%entered the sample zone.
+      strt=true;
+  end
+  if strt
+      lc="";
+      ec="";
+     for j=16:31
+        lc=lc+oneline(j);
+        lcv=str2double(lc);
+     end 
+     LCVE(sample)=lcv;
+     for j=64:73
+         ec=ec+oneline(j);
+         ecv=str2double(ec);
+     end
+     ECATENC(sample)=ecv;
+     sample=sample+1;
+  end
+  fprintf(oneline);
+  oneline = fgets(file);
+end
+stress = LCVE(:);
+strain = ECATENC(:);
+LC_1=LCVE(2);
+EC_1=ECATENC(2);
+for i=1:length(LCVE)
+    stress(i)=(stress(i)-stress(3))/Area;
+end
+for i=1:length(ECATENC)
+    strain(i)=(strain(i)-strain(3))/(Length);
+end
+plot(strain,stress,'k')
+hold on;
+title('Stress-Strain');
+xlabel('Strain');
+ylabel('Stress');
+fclose(file );
