@@ -1,6 +1,6 @@
 clc;
 clear all;
-%'05_08_20_tension_silk_comp_1_Bar.txt'
+%'05_08_20_tension_silk_comp_1_Bar.txt'-example
 filename = input('file name:');
    if ~exist(filename)
         warningMessage = sprintf('WARNING: file does not exist:\n%s', filename);
