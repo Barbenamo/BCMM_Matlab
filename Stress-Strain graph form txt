@@ -54,14 +54,13 @@ n=length(ECATENC);
 EC_1(1,1:n)=ECATENC(1);
 LC_1(1,1:n)=LCFS(1);
 stress=abs(LCFS-LC_1)/(Area*10^6);
-strain=abs(ECATENC-EC_1)*Length;
+strain=abs(ECATENC-EC_1)/Length;
 strain=strain';
-figure(2);
 plot(strain,stress,'k')
 hold on;
 grid on;
 title('Stress-Strain');
-xlabel('Strain');
-ylabel('Stress');
+xlabel('Strain [mm/mm]');
+ylabel('Stress [Mpa]');
 fclose(file );
 
