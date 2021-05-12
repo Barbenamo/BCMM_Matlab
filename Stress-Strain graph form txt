@@ -57,6 +57,7 @@ while ischar(oneline)
      ECATENC(sample)=ecv;
      sample=sample+1;
   end
+  fprintf(oneline);
   oneline = fgets(file);
 end
 n=length(ECATENC);
