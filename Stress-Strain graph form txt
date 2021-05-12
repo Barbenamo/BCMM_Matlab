@@ -33,19 +33,30 @@ while ischar(oneline)
   if strt
       lc="";
       ec="";
-     for j=17:32
+      if(oneline(17)=="-")
+          n=33;
+          k=34;
+      else
+          n=32;
+          k=33;
+      end
+     for j=17:n
         lc=lc+oneline(j);
         lcv=str2double(lc);
-     end 
+     end
      LCFS(sample)=lcv;
-     for j=81:96
+     if(oneline(34)=="-")
+          n=50;
+      else
+          n=49;
+     end
+     for j=k:n
          ec=ec+oneline(j);
          ecv=(str2double(ec));
      end
      ECATENC(sample)=ecv;
      sample=sample+1;
   end
-  fprintf(oneline);
   oneline = fgets(file);
 end
 n=length(ECATENC);
@@ -53,8 +64,11 @@ EC_1(1,1:n)=ECATENC(1);
 LC_1(1,1:n)=LCFS(1);
 stress=abs(LCFS-LC_1)/(Area*10^6);
 strain=abs(ECATENC-EC_1)/Length;
-strain=strain';
-plot(strain,stress,'k')
+t=max(stress);
+t=find(stress==t);
+strain1=strain(:,1:t);
+stress1=stress(:,1:t);
+plot(strain1,stress1,'k')
 hold on;
 grid on;
 title('Stress-Strain');
