@@ -1,17 +1,15 @@
+%Author: Bar Ben Amo.
+%Date: 12/05/2021.
+%This script creates a stress-strain graph, using the txt output file.
+%Note: please fill after 'file name:' the entire file name.
+%example for a valid file name:'05_08_20_tension_silk_comp_1_Bar.txt'.
 clc;
 clear all;
-%'05_08_20_tension_silk_comp_1_Bar.txt'
 filename = input('file name:');
    if ~exist(filename)
         warningMessage = sprintf('WARNING: file does not exist:\n%s', filename);
         uiwait(warndlg(warningMessage));
-    end
-% Manual input:
-%  st=input('Specimen Thickness (m):');
-%  sw=input('Specimen Width (m):');
-%  sd=input('Specimen Diameter (m):');
-%  sa=input('Specimen Area (m^2): ');
-%  sl=input('Specimen Length (m): ');
+   end
 file = fopen(filename,'rt');%open file and read-only.
 LCFS = [];
 sample = 1;
