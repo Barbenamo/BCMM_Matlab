@@ -2,7 +2,7 @@
 %Date: 12/05/2021.
 %This script creates a stress-strain graph, using the txt output file.
 %Note: please fill after 'file name:' the entire file name.
-%example for a valid file name:'05_08_20_tension_silk_comp_1_Bar.txt'.
+%example for a valid file name:13_4_21sample_20_3_0deg.txt.
 clc;
 clear all;
 filename = input('file name:');
